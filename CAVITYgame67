@@ -1,1 +1,155 @@
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/SiriusSoftwareLtd/Rayfield/main/source.lua'))()
+local Window = Rayfield:CreateWindow({Name = " [ ⚓ ] CAVITY • PRO ", ConfigurationSaving = { Enabled = false }})
+local RunService = game:GetService("RunService")
 
+local Settings = {
+    AutoEnabled = false, AutoDirt = false, AutoEnterDoors = false, AutoBreakDoors = false, SelectedItems = {},
+    EspCoral = false, EspBurger = false, EspCola = false, EspAxe = false, EspBubble = false, EspMonsters = false, EspDoors = false, EspButtons = false, EspText = false,
+    SkillCount = 1, WalkSpeed = 16,
+    ColorCoral = Color3.fromRGB(255, 255, 0), ColorBurger = Color3.fromRGB(218, 165, 32), ColorCola = Color3.fromRGB(40, 40, 40),
+    ColorAxe = Color3.fromRGB(139, 69, 19), ColorBubble = Color3.fromRGB(0, 191, 255),
+    ColorMonsters = Color3.fromRGB(255, 0, 0), ColorDoors = Color3.fromRGB(0, 255, 0),
+    ColorFakeDoors = Color3.fromRGB(255, 0, 0), ColorButtons = Color3.fromRGB(255, 255, 255)
+}
+
+local UsedDoors = {}
+local BlacklistFolders = {["Shop"] = true, ["Upgrades"] = true, ["RoomCards"] = true, ["RoomShop"] = true, ["ShopRoom"] = true}
+local function MatchName(objName, targetName) return string.match(string.lower(objName), string.lower(targetName)) ~= nil end
+
+local function TryCollect(obj)
+    local parent = obj.Parent
+    while parent and parent ~= game:GetService("Workspace") do
+        if BlacklistFolders[parent.Name] then return end
+        parent = parent.Parent
+    end
+    if string.match(obj.Name, "Fake") or obj.Name == "Sick Coral" then return end
+    local prompt = obj:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt and prompt.ActionText ~= "Break" then prompt.HoldDuration = 0; fireproximityprompt(prompt) end
+end
+
+local function TriggerSkills()
+    local sf = game:GetService("ReplicatedStorage"):FindFirstChild("Events") and game:GetService("ReplicatedStorage").Events:FindFirstChild("Skills")
+    if sf then for _, s in pairs(sf:GetChildren()) do if s:IsA("RemoteEvent") then for i = 1, Settings.SkillCount do s:FireServer() end end end end
+end
+
+task.spawn(function()
+    while task.wait(0.1) do
+        local hum = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
+        if hum and hum.WalkSpeed ~= Settings.WalkSpeed then hum.WalkSpeed = Settings.WalkSpeed end
+        
+        if Settings.AutoEnabled then
+            for _, obj in pairs(workspace:GetDescendants()) do
+                if (Settings.AutoDirt and obj.Name == "Dirt") then TryCollect(obj) end
+                for _, item in pairs(Settings.SelectedItems) do if MatchName(obj.Name, item) then TryCollect(obj) end end
+            end
+        end
+    end
+end)
+
+RunService.Heartbeat:Connect(function()
+    if not Settings.AutoEnterDoors and not Settings.AutoBreakDoors then return end
+    local humRoot = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if not humRoot then return end
+    
+    for _, obj in pairs(workspace:GetDescendants()) do
+        if (obj.Name == "HRPtppos") then
+            if (humRoot.Position - obj.Position).Magnitude < 10 then
+                local prompt = obj:FindFirstChildWhichIsA("ProximityPrompt", true)
+                if prompt then
+                    prompt.HoldDuration = 0
+                    if Settings.AutoEnterDoors and not string.find(prompt.ActionText, "Break") and not UsedDoors[obj] then
+                        fireproximityprompt(prompt)
+                        UsedDoors[obj] = true
+                    elseif Settings.AutoBreakDoors and string.find(prompt.ActionText, "Break") then
+                        fireproximityprompt(prompt)
+                    end
+                end
+            end
+        end
+    end
+end)
+
+task.spawn(function()
+    while task.wait(1) do
+        for _, obj in pairs(workspace:GetDescendants()) do
+            if obj.Name == "EspContainer" and (not obj.Parent or not obj.Parent:IsDescendantOf(workspace)) then obj:Destroy() end
+        end
+        for _, obj in pairs(workspace:GetDescendants()) do
+            if obj:FindFirstChild("EspContainer") or obj:FindFirstAncestor(game.Players.LocalPlayer.Name) then continue end
+            local color, label = nil, nil
+            if Settings.EspDoors and (obj.Name == "HRPtppos" or obj.Name == "HRPtpposFAKEOne") then color, label = (obj.Name == "HRPtppos" and Settings.ColorDoors or Settings.ColorFakeDoors), (obj.Name == "HRPtppos" and "Door" or "Fake")
+            elseif Settings.EspButtons and obj.Name == "hrpbuttontp" then color, label = Settings.ColorButtons, "Button"
+            elseif Settings.EspCoral and (obj.Name == "Coral" or obj.Name == "BigCoral") then color, label = Settings.ColorCoral, "Coral"
+            elseif Settings.EspBurger and MatchName(obj.Name, "Burger") then color, label = Settings.ColorBurger, "Burger"
+            elseif Settings.EspCola and MatchName(obj.Name, "Cola") then color, label = Settings.ColorCola, "Cola"
+            elseif Settings.EspAxe and MatchName(obj.Name, "Axe") then color, label = Settings.ColorAxe, "Axe"
+            elseif Settings.EspBubble and MatchName(obj.Name, "Bubble") then color, label = Settings.ColorBubble, "Bubble"
+            elseif Settings.EspMonsters and (obj.Name == "MubrikTheEater" or obj.Name == "Drowned" or obj.Name == "Trap") then
+                color = Settings.ColorMonsters
+                label = (obj.Name == "Drowned" and "Zombie") or (obj.Name == "Trap" and "Trap") or "Monster"
+            end
+            if color then 
+                local part = obj:IsA("Model") and (obj.PrimaryPart or obj:FindFirstChildWhichIsA("BasePart", true)) or (obj:IsA("BasePart") and obj)
+                if part then
+                    local c = Instance.new("Folder", obj); c.Name = "EspContainer"
+                    local b = Instance.new("BoxHandleAdornment", c); b.Adornee = part; b.Size = part.Size + Vector3.new(0.5,0.5,0.5); b.Color3 = color; b.AlwaysOnTop = true; b.ZIndex = 5; b.Transparency = 0.3
+                    if Settings.EspText then
+                        local g = Instance.new("BillboardGui", c); g.Name = "EspGui"; g.Size = UDim2.new(0,100,0,50); g.AlwaysOnTop = true; g.StudsOffset = Vector3.new(0,3,0)
+                        local l = Instance.new("TextLabel", g); l.Size = UDim2.new(1,0,1,0); l.Text = label; l.TextColor3 = color; l.BackgroundTransparency = 1; l.TextStrokeTransparency = 0
+                    end
+                end
+            end
+        end
+    end
+end)
+
+local AutoTab = Window:CreateTab("Auto", nil)
+local AbilityTab = Window:CreateTab("Ability", nil)
+local EspTab = Window:CreateTab("ESP", nil)
+local MazeTab = Window:CreateTab("Auto Maze", nil)
+local MiscTab = Window:CreateTab("Misc", nil)
+
+AutoTab:CreateToggle({Name = "Auto Pickup", Callback = function(v) Settings.AutoEnabled = v end})
+AutoTab:CreateDropdown({Name = "Items", Options = {"Coral", "Burger", "Cola", "Axe", "Bubble", "Key"}, MultipleOptions = true, Callback = function(opt) Settings.SelectedItems = opt end})
+AutoTab:CreateToggle({Name = "Auto Dirt", Callback = function(v) Settings.AutoDirt = v end})
+AutoTab:CreateToggle({Name = "Auto Enter Doors", Callback = function(v) Settings.AutoEnterDoors = v end})
+AutoTab:CreateToggle({Name = "Auto Break Doors", Callback = function(v) Settings.AutoBreakDoors = v end})
+
+AbilityTab:CreateInput({Name = "Skill Count", PlaceholderText = "1", Callback = function(v) Settings.SkillCount = tonumber(v) or 1 end})
+AbilityTab:CreateButton({Name = "Activate Skills", Callback = function() TriggerSkills() end})
+
+EspTab:CreateToggle({Name = "ESP Coral", Callback = function(v) Settings.EspCoral = v end})
+EspTab:CreateToggle({Name = "ESP Burger", Callback = function(v) Settings.EspBurger = v end})
+EspTab:CreateToggle({Name = "ESP Cola", Callback = function(v) Settings.EspCola = v end})
+EspTab:CreateToggle({Name = "ESP Axe", Callback = function(v) Settings.EspAxe = v end})
+EspTab:CreateToggle({Name = "ESP Bubble", Callback = function(v) Settings.EspBubble = v end})
+EspTab:CreateToggle({Name = "ESP Monsters", Callback = function(v) Settings.EspMonsters = v end})
+EspTab:CreateToggle({Name = "ESP Doors", Callback = function(v) Settings.EspDoors = v end})
+EspTab:CreateToggle({Name = "ESP Buttons", Callback = function(v) Settings.EspButtons = v end})
+EspTab:CreateToggle({Name = "Show Labels", Callback = function(v) Settings.EspText = v end})
+
+MazeTab:CreateToggle({Name = "Auto Activate Buttons", Callback = function(Value)
+    if Value then
+        local p, c = game.Players.LocalPlayer, game.Players.LocalPlayer.Character
+        local hrp = c and c:FindFirstChild("HumanoidRootPart")
+        if not hrp then return end
+        local startPos = hrp.CFrame
+        local RoomSpecialFifty = workspace.Rooms:FindFirstChild("RoomSpecialFifty")
+        if RoomSpecialFifty then
+            for _, child in pairs(RoomSpecialFifty:GetChildren()) do
+                if child.Name == "Button" and child:IsA("Model") then
+                    local hrpbuttontp = child:FindFirstChild("hrpbuttontp")
+                    if hrpbuttontp then
+                        hrp.CFrame = hrpbuttontp.CFrame
+                        task.wait(6)
+                        local prompt = hrpbuttontp:FindFirstChildOfClass("ProximityPrompt")
+                        if prompt then fireproximityprompt(prompt) end
+                    end
+                end
+            end
+            task.wait(1); hrp.CFrame = startPos
+        end
+    end
+end})
+
+MiscTab:CreateSlider({Name = "WalkSpeed", Range = {16, 90}, Increment = 1, CurrentValue = 16, Callback = function(v) Settings.WalkSpeed = v end})
