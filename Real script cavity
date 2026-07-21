@@ -1,2 +1,195 @@
-local v0={Service="cavitygame67",SilentMode=true,SaveKey=true,SaveKeyPath="panda_key.txt",AutoKick=false,KickMessage="Invalid Key.",HubName="Cavity script",MaxRetries=3,DiscordURL=nil};local v1={bg=Color3.fromRGB(0 + 0 ,0 -0 ,1187 -(1069 + 118) ),card=Color3.fromRGB(10,22 -12 ,21 -11 ),border=Color3.fromRGB(40,7 + 33 ,71 -31 ),inputBg=Color3.fromRGB(0 + 0 ,791 -(368 + 423) ,0),text=Color3.fromRGB(255,801 -546 ,255),muted=Color3.fromRGB(158 -(10 + 8) ,538 -398 ,140),primary=Color3.fromRGB(255,697 -(416 + 26) ,814 -559 ),primaryH=Color3.fromRGB(230,99 + 131 ,406 -176 ),success=Color3.fromRGB(74,222,566 -(145 + 293) ),error_=Color3.fromRGB(678 -(44 + 386) ,1599 -(998 + 488) ,36 + 77 )};local v2={key={id=16898613936 -(166 + 261) ,offset=Vector2.new(1376 -(289 + 218) ,1748 -(1213 + 131) )},lock={id=16898613509,offset=Vector2.new(918,194 + 663 )},copy={id=16898613044,offset=Vector2.new(918,612)},check={id=18778190671 -1879577852 ,offset=Vector2.new(710,3085 -2216 )},x={id=16898614728 -(814 + 45) ,offset=Vector2.new(2140 -1271 ,49 + 857 )},arrowRight={id=16898613514 -(261 + 624) ,offset=Vector2.new(804 -351 ,1900 -(1020 + 60) )},shield={id=16898615200 -(630 + 793) ,offset=Vector2.new(2778 -1958 ,1216 -959 )},sparkles={id=16808247902 --90365875 ,offset=Vector2.new(918,49)},circleCheck={id=16898614566 -(760 + 987) ,offset=Vector2.new(2782 -(1789 + 124) ,1721 -(745 + 21) )},circleX={id=16768118362 --130494682 ,offset=Vector2.new(820,306)}};local function v3(v148,v149,v150,v151) local v152=0;local v153;local v154;local v155;while true do if (v152==(0 -0)) then v153=0 + 0 ;v154=nil;v152=1;end if (v152==(1 + 0)) then v155=nil;while true do if (v153==3) then local v194=0;while true do if (v194==0) then if v151 then v155.ImageColor3=v151;end return v155;end end end if (v153==1) then v155.BackgroundTransparency=1056 -(87 + 968) ;v155.BorderSizePixel=0 -0 ;v155.Image="rbxassetid://"   .. v154.id ;v153=2;end if (v153==(0 + 0)) then v154=v2[v149];if  not v154 then return nil;end v155=Instance.new("ImageLabel",v148);v153=2 -1 ;end if (v153==(1415 -(447 + 966))) then v155.ImageRectOffset=v154.offset;v155.ImageRectSize=Vector2.new(131 -83 ,48);v155.Size=UDim2.new(1817 -(1703 + 114) ,v150 or (721 -(376 + 325)) ,0 -0 ,v150 or (61 -41) );v153=1 + 2 ;end end break;end end end local v4=(task and task.wait) or wait ;local v5=((typeof(setclipboard)=="function") and setclipboard) or function() end ;local v6=((typeof(writefile)=="function") and writefile) or function() end ;local v7=((typeof(readfile)=="function") and readfile) or function() return nil;end ;local v8=((typeof(isfile)=="function") and isfile) or function() return false;end ;local function v9() local v156=0;local v157;local v158;local v159;local v160;local v161;while true do if ((2 -1)==v156) then v159=loadstring(v158);if  not v159 then return nil;end v156=16 -(9 + 5) ;end if (v156==(376 -(85 + 291))) then v157,v158=pcall(function() return game:HttpGet("https://api.pandauth.com/lib/external/panda-v3-external.lua");end);if ( not v157 or  not v158) then return nil;end v156=1266 -(243 + 1022) ;end if (v156==(7 -5)) then v160,v161=pcall(v159);return (v160 and v161) or nil ;end end end local v10=v9();if  not v10 then return;end local function v11(v162) for v178=1 + 0 ,v0.MaxRetries do local v179=0;local v180;local v181;local v182;while true do if (v179==(1181 -(1123 + 57))) then v182=nil;while true do if (v180==0) then v181,v182=pcall(v10.Init,{Service=v0.Service,Key=v162,SilentMode=v0.SilentMode});if (v181 and (v182=="validated!!")) then return true;end v180=1 + 0 ;end if (v180==1) then v4(254.4 -(163 + 91) );break;end end break;end if (v179==(1930 -(1869 + 61))) then v180=0 + 0 ;v181=nil;v179=3 -2 ;end end end return false;end local function v12() if ( not v0.SaveKey or  not v8(v0.SaveKeyPath)) then return false;end local v163=v7(v0.SaveKeyPath);return v163 and (v163~="") and v11((v163:gsub("%s+",""))) ;end local function v13() local v164,v165=pcall(function() return game:GetService("CoreGui");end);if (v164 and v165) then return v165;end return game.Players.LocalPlayer:WaitForChild("PlayerGui");end if v12() then return;end local v14=Instance.new("ScreenGui");v14.Name="PandaOnyx";v14.ResetOnSpawn=false;v14.IgnoreGuiInset=true;v14.Parent=v13();local v19=Instance.new("Frame",v14);v19.Size=UDim2.new(1,0 -0 ,1,0 + 0 );v19.BorderSizePixel=0 -0 ;v19.BackgroundColor3=v1.bg;v19.BackgroundTransparency=0.15 + 0 ;local v25=Instance.new("Frame",v19);v25.Size=UDim2.new(1474 -(1329 + 145) ,1391 -(140 + 831) ,1850 -(1409 + 441) ,420);v25.Position=UDim2.new(718.5 -(15 + 703) , -(98 + 112),0.5, -(648 -(262 + 176)));v25.BackgroundColor3=v1.card;v25.BorderSizePixel=0;Instance.new("UICorner",v25).CornerRadius=UDim.new(1721 -(345 + 1376) ,702 -(198 + 490) );local v32=Instance.new("UIStroke",v25);v32.Color=v1.border;v32.Thickness=1;local v36=Instance.new("UIPadding",v25);v36.PaddingLeft=UDim.new(0,176 -136 );v36.PaddingRight=UDim.new(0 -0 ,1246 -(696 + 510) );v36.PaddingTop=UDim.new(0 -0 ,36);v36.PaddingBottom=UDim.new(1262 -(1091 + 171) ,28);local v41=Instance.new("Frame",v25);v41.Position=UDim2.new(0 + 0 ,0,0 -0 ,0 -0 );v41.Size=UDim2.new(374 -(123 + 251) ,159 -127 ,698 -(208 + 490) ,1 + 1 );v41.BackgroundColor3=v1.primary;v41.BorderSizePixel=0 + 0 ;local v47=Instance.new("TextButton",v25);v47.Position=UDim2.new(1, -22,836 -(660 + 176) ,0 + 0 );v47.Size=UDim2.new(0,224 -(14 + 188) ,675 -(534 + 141) ,22);v47.BackgroundTransparency=1 + 0 ;v47.Font=Enum.Font.Gotham;v47.Text="✕";v47.TextColor3=v1.muted;v47.TextSize=13 + 1 ;v47.AutoButtonColor=false;local v58=Instance.new("TextLabel",v25);v58.BackgroundTransparency=1 + 0 ;v58.Position=UDim2.new(0,0 -0 ,0 -0 ,67 -43 );v58.Size=UDim2.new(1 + 0 ,0 + 0 ,396 -(115 + 281) ,74 -42 );v58.Font=Enum.Font.GothamBold;v58.Text=v0.HubName;v58.TextColor3=v1.text;v58.TextSize=22 + 4 ;v58.TextXAlignment=Enum.TextXAlignment.Left;local v71=Instance.new("TextLabel",v25);v71.BackgroundTransparency=2 -1 ;v71.Position=UDim2.new(0,0 -0 ,0,927 -(550 + 317) );v71.Size=UDim2.new(1,0,0 -0 ,24 -6 );v71.Font=Enum.Font.Gotham;v71.Text="Authentication";v71.TextColor3=v1.muted;v71.TextSize=33 -21 ;v71.TextXAlignment=Enum.TextXAlignment.Left;local v80=Instance.new("TextLabel",v25);v80.BackgroundTransparency=286 -(134 + 151) ;v80.Position=UDim2.new(1665 -(970 + 695) ,0 -0 ,0,2110 -(582 + 1408) );v80.Size=UDim2.new(3 -2 ,0,0,14);v80.Font=Enum.Font.GothamMedium;v80.Text="ACCESS KEY";v80.TextColor3=v1.muted;v80.TextSize=10;v80.TextXAlignment=Enum.TextXAlignment.Left;local v90=Instance.new("TextBox",v25);v90.Position=UDim2.new(0,0 -0 ,0 -0 ,1964 -(1195 + 629) );v90.Size=UDim2.new(1,0,0 -0 ,44);v90.BackgroundColor3=v1.inputBg;v90.BorderSizePixel=241 -(187 + 54) ;v90.Font=Enum.Font.Gotham;v90.PlaceholderText="Paste your access key";v90.PlaceholderColor3=Color3.fromRGB(80,860 -(162 + 618) ,80);v90.Text="";v90.TextColor3=v1.text;v90.TextSize=10 + 4 ;v90.ClearTextOnFocus=false;v90.TextXAlignment=Enum.TextXAlignment.Left;local v104=Instance.new("Frame",v90);v104.Position=UDim2.new(0 + 0 ,0,1, -(1 -0));v104.Size=UDim2.new(1 -0 ,0 + 0 ,1636 -(1373 + 263) ,1001 -(451 + 549) );v104.BackgroundColor3=v1.border;v104.BorderSizePixel=0;v90.Focused:Connect(function() local v166=0;local v167;while true do if (0==v166) then v167=0 + 0 ;while true do if (v167==0) then v104.BackgroundColor3=v1.primary;v104.Size=UDim2.new(1 -0 ,0,0 -0 ,2);break;end end break;end end end);v90.FocusLost:Connect(function() local v168=1384 -(746 + 638) ;local v169;while true do if (v168==(0 + 0)) then v169=0 -0 ;while true do if (v169==(341 -(218 + 123))) then v104.BackgroundColor3=v1.border;v104.Size=UDim2.new(1582 -(1535 + 46) ,0,0 + 0 ,1);break;end end break;end end end);local v109=Instance.new("TextButton",v25);v109.Position=UDim2.new(0,0 + 0 ,0,210);v109.Size=UDim2.new(561 -(306 + 254) ,0 + 0 ,0,93 -45 );v109.BackgroundColor3=v1.primary;v109.BorderSizePixel=1467 -(899 + 568) ;v109.Font=Enum.Font.GothamBold;v109.Text="Continue";v109.TextColor3=Color3.fromRGB(0 + 0 ,0 -0 ,603 -(268 + 335) );v109.TextSize=14;v109.AutoButtonColor=false;Instance.new("UICorner",v109).CornerRadius=UDim.new(0,298 -(60 + 230) );v109.MouseEnter:Connect(function() v109.BackgroundColor3=v1.primaryH;end);v109.MouseLeave:Connect(function() v109.BackgroundColor3=v1.primary;end);local v120=Instance.new("TextButton",v25);v120.Position=UDim2.new(0,572 -(426 + 146) ,0 + 0 ,1726 -(282 + 1174) );v120.Size=UDim2.new(1,811 -(569 + 242) ,0,63 -41 );v120.BackgroundTransparency=1 + 0 ;v120.Font=Enum.Font.Gotham;v120.Text="Get a key →";v120.TextColor3=v1.muted;v120.TextSize=12;v120.AutoButtonColor=false;v120.TextXAlignment=Enum.TextXAlignment.Left;local v130=Instance.new("TextLabel",v25);v130.BackgroundTransparency=1025 -(706 + 318) ;v130.Position=UDim2.new(1251 -(721 + 530) ,0,1272 -(945 + 326) , -32);v130.Size=UDim2.new(2 -1 ,0 + 0 ,700 -(271 + 429) ,13 + 1 );v130.Font=Enum.Font.Gotham;v130.Text="";v130.TextColor3=v1.muted;v130.TextSize=1511 -(1408 + 92) ;v130.TextXAlignment=Enum.TextXAlignment.Left;local v139=Instance.new("TextLabel",v25);v139.BackgroundTransparency=1087 -(461 + 625) ;v139.Position=UDim2.new(1288 -(993 + 295) ,0 + 0 ,1172 -(418 + 753) , -(6 + 8));v139.Size=UDim2.new(1,0 + 0 ,0 + 0 ,12);v139.Font=Enum.Font.Gotham;v139.Text="Panda v3.external";v139.TextColor3=Color3.fromRGB(21 + 59 ,609 -(406 + 123) ,1849 -(1749 + 20) );v139.TextSize=9;v139.TextXAlignment=Enum.TextXAlignment.Left;v47.MouseButton1Click:Connect(function() v14:Destroy();end);v120.MouseButton1Click:Connect(function() local v174=0 + 0 ;local v175;while true do if (v174==(1322 -(1249 + 73))) then v175=v10.GetKeyLink({Service=v0.Service});if v175 then local v190=0;while true do if (v190==0) then v5(v175);v130.Text="Link copied.";v190=1;end if (v190==(1 + 0)) then v130.TextColor3=v1.success;break;end end end break;end end end);v109.MouseButton1Click:Connect(function() local v176=v90.Text:gsub("%s+","");if (v176=="") then local v183=1145 -(466 + 679) ;local v184;while true do if (v183==0) then v184=0 -0 ;while true do if ((2 -1)==v184) then return;end if (v184==(1900 -(106 + 1794))) then v130.Text="Please enter your key.";v130.TextColor3=v1.error_;v184=1 + 0 ;end end break;end end end v109.Text="Verifying…";if v11(v176) then local v185=0 + 0 ;while true do if (v185==(0 -0)) then if v0.SaveKey then v6(v0.SaveKeyPath,v176);end v130.Text="Verified.";v185=1;end if (v185==1) then v130.TextColor3=v1.success;v4(0.5 -0 );v185=116 -(4 + 110) ;end if (v185==(586 -(57 + 527))) then v14:Destroy();break;end end else v109.Text="Continue";v130.Text="Invalid key.";v130.TextColor3=v1.error_;if v0.AutoKick then game.Players.LocalPlayer:Kick(v0.KickMessage);end end end);
--- ⚠️ WARNING: integrity protected!
+local PANDA_CONFIG = {
+    Service     = "cavitygame67",
+    SilentMode  = true,
+    SaveKey     = true,
+    SaveKeyPath = "panda_key.txt",
+    AutoKick    = false,
+    KickMessage = "Invalid Key.",
+    HubName     = "Cavity script",
+    MaxRetries  = 3,
+    DiscordURL  = nil,
+}
+
+local C = {
+    bg       = Color3.fromRGB(0, 0, 0),
+    card     = Color3.fromRGB(10, 10, 10),
+    border   = Color3.fromRGB(40, 40, 40),
+    inputBg  = Color3.fromRGB(0, 0, 0),
+    text     = Color3.fromRGB(255, 255, 255),
+    muted    = Color3.fromRGB(140, 140, 140),
+    primary  = Color3.fromRGB(255, 255, 255),
+    primaryH = Color3.fromRGB(230, 230, 230),
+    success  = Color3.fromRGB(74, 222, 128),
+    error_   = Color3.fromRGB(248, 113, 113),
+}
+
+
+local ICONS = {
+    key          = { id = 16898613509, offset = Vector2.new(869, 404) },
+    lock         = { id = 16898613509, offset = Vector2.new(918, 857) },
+    copy         = { id = 16898613044, offset = Vector2.new(918, 612) },
+    check        = { id = 16898612819, offset = Vector2.new(710, 869) },
+    x            = { id = 16898613869, offset = Vector2.new(869, 906) },
+    arrowRight   = { id = 16898612629, offset = Vector2.new(453, 820) },
+    shield       = { id = 16898613777, offset = Vector2.new(820, 257) },
+    sparkles     = { id = 16898613777, offset = Vector2.new(918, 49)  },
+    circleCheck  = { id = 16898612819, offset = Vector2.new(869, 955) },
+    circleX      = { id = 16898613044, offset = Vector2.new(820, 306) },
+}
+local function makeIcon(parent, name, size, color)
+    local data = ICONS[name]; if not data then return nil end
+    local img = Instance.new("ImageLabel", parent)
+    img.BackgroundTransparency = 1
+    img.BorderSizePixel = 0
+    img.Image = "rbxassetid://" .. data.id
+    img.ImageRectOffset = data.offset
+    img.ImageRectSize = Vector2.new(48, 48)
+    img.Size = UDim2.new(0, size or 20, 0, size or 20)
+    if color then img.ImageColor3 = color end
+    return img
+end
+local _wait      = task and task.wait or wait
+local safeCopy   = (typeof(setclipboard) == "function") and setclipboard or function() end
+local safeWrite  = (typeof(writefile)    == "function") and writefile    or function() end
+local safeRead   = (typeof(readfile)     == "function") and readfile     or function() return nil end
+local safeExists = (typeof(isfile)       == "function") and isfile       or function() return false end
+
+local function loadLib()
+    local ok, src = pcall(function() return game:HttpGet("https://api.pandauth.com/lib/external/panda-v3-external.lua") end)
+    if not ok or not src then return nil end
+    local fn = loadstring(src); if not fn then return nil end
+    local ok2, lib = pcall(fn); return ok2 and lib or nil
+end
+local Pelinda = loadLib(); if not Pelinda then return end
+
+local function validate(key)
+    for i = 1, PANDA_CONFIG.MaxRetries do
+        local ok, r = pcall(Pelinda.Init, { Service = PANDA_CONFIG.Service, Key = key, SilentMode = PANDA_CONFIG.SilentMode })
+        if ok and r == "validated!!" then return true end
+        _wait(0.4)
+    end
+    return false
+end
+local function trySaved()
+    if not PANDA_CONFIG.SaveKey or not safeExists(PANDA_CONFIG.SaveKeyPath) then return false end
+    local k = safeRead(PANDA_CONFIG.SaveKeyPath); return k and k ~= "" and validate((k:gsub("%s+", "")))
+end
+local function getParent()
+    local ok, cg = pcall(function() return game:GetService("CoreGui") end)
+    if ok and cg then return cg end
+    return game.Players.LocalPlayer:WaitForChild("PlayerGui")
+end
+if trySaved() then return end
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "PandaOnyx"; gui.ResetOnSpawn = false; gui.IgnoreGuiInset = true
+gui.Parent = getParent()
+
+local overlay = Instance.new("Frame", gui)
+overlay.Size = UDim2.new(1, 0, 1, 0); overlay.BorderSizePixel = 0
+overlay.BackgroundColor3 = C.bg; overlay.BackgroundTransparency = 0.15
+
+local card = Instance.new("Frame", overlay)
+card.Size = UDim2.new(0, 420, 0, 420)
+card.Position = UDim2.new(0.5, -210, 0.5, -210)
+card.BackgroundColor3 = C.card; card.BorderSizePixel = 0
+Instance.new("UICorner", card).CornerRadius = UDim.new(0, 14)
+local cardStroke = Instance.new("UIStroke", card)
+cardStroke.Color = C.border; cardStroke.Thickness = 1
+local pad = Instance.new("UIPadding", card)
+pad.PaddingLeft = UDim.new(0, 40); pad.PaddingRight = UDim.new(0, 40)
+pad.PaddingTop = UDim.new(0, 36); pad.PaddingBottom = UDim.new(0, 28)
+
+local accent = Instance.new("Frame", card)
+accent.Position = UDim2.new(0, 0, 0, 0); accent.Size = UDim2.new(0, 32, 0, 2)
+accent.BackgroundColor3 = C.primary; accent.BorderSizePixel = 0
+
+local closeBtn = Instance.new("TextButton", card)
+closeBtn.Position = UDim2.new(1, -22, 0, 0); closeBtn.Size = UDim2.new(0, 22, 0, 22)
+closeBtn.BackgroundTransparency = 1; closeBtn.Font = Enum.Font.Gotham
+closeBtn.Text = "✕"; closeBtn.TextColor3 = C.muted; closeBtn.TextSize = 14; closeBtn.AutoButtonColor = false
+
+local title = Instance.new("TextLabel", card)
+title.BackgroundTransparency = 1
+title.Position = UDim2.new(0, 0, 0, 24); title.Size = UDim2.new(1, 0, 0, 32)
+title.Font = Enum.Font.GothamBold; title.Text = PANDA_CONFIG.HubName
+title.TextColor3 = C.text; title.TextSize = 26
+title.TextXAlignment = Enum.TextXAlignment.Left
+
+local sub = Instance.new("TextLabel", card)
+sub.BackgroundTransparency = 1
+sub.Position = UDim2.new(0, 0, 0, 60); sub.Size = UDim2.new(1, 0, 0, 18)
+sub.Font = Enum.Font.Gotham; sub.Text = "Authentication"
+sub.TextColor3 = C.muted; sub.TextSize = 12
+sub.TextXAlignment = Enum.TextXAlignment.Left
+
+local lbl = Instance.new("TextLabel", card)
+lbl.BackgroundTransparency = 1
+lbl.Position = UDim2.new(0, 0, 0, 120); lbl.Size = UDim2.new(1, 0, 0, 14)
+lbl.Font = Enum.Font.GothamMedium; lbl.Text = "ACCESS KEY"
+lbl.TextColor3 = C.muted; lbl.TextSize = 10
+lbl.TextXAlignment = Enum.TextXAlignment.Left
+
+local inputBox = Instance.new("TextBox", card)
+inputBox.Position = UDim2.new(0, 0, 0, 140); inputBox.Size = UDim2.new(1, 0, 0, 44)
+inputBox.BackgroundColor3 = C.inputBg; inputBox.BorderSizePixel = 0
+inputBox.Font = Enum.Font.Gotham; inputBox.PlaceholderText = "Paste your access key"
+inputBox.PlaceholderColor3 = Color3.fromRGB(80, 80, 80)
+inputBox.Text = ""; inputBox.TextColor3 = C.text; inputBox.TextSize = 14
+inputBox.ClearTextOnFocus = false; inputBox.TextXAlignment = Enum.TextXAlignment.Left
+local iLine = Instance.new("Frame", inputBox)
+iLine.Position = UDim2.new(0, 0, 1, -1); iLine.Size = UDim2.new(1, 0, 0, 1)
+iLine.BackgroundColor3 = C.border; iLine.BorderSizePixel = 0
+inputBox.Focused:Connect(function() iLine.BackgroundColor3 = C.primary; iLine.Size = UDim2.new(1, 0, 0, 2) end)
+inputBox.FocusLost:Connect(function() iLine.BackgroundColor3 = C.border; iLine.Size = UDim2.new(1, 0, 0, 1) end)
+
+local verifyBtn = Instance.new("TextButton", card)
+verifyBtn.Position = UDim2.new(0, 0, 0, 210); verifyBtn.Size = UDim2.new(1, 0, 0, 48)
+verifyBtn.BackgroundColor3 = C.primary; verifyBtn.BorderSizePixel = 0
+verifyBtn.Font = Enum.Font.GothamBold; verifyBtn.Text = "Continue"
+verifyBtn.TextColor3 = Color3.fromRGB(0, 0, 0); verifyBtn.TextSize = 14
+verifyBtn.AutoButtonColor = false
+Instance.new("UICorner", verifyBtn).CornerRadius = UDim.new(0, 8)
+verifyBtn.MouseEnter:Connect(function() verifyBtn.BackgroundColor3 = C.primaryH end)
+verifyBtn.MouseLeave:Connect(function() verifyBtn.BackgroundColor3 = C.primary end)
+
+local getBtn = Instance.new("TextButton", card)
+getBtn.Position = UDim2.new(0, 0, 0, 270); getBtn.Size = UDim2.new(1, 0, 0, 22)
+getBtn.BackgroundTransparency = 1
+getBtn.Font = Enum.Font.Gotham; getBtn.Text = "Get a key →"
+getBtn.TextColor3 = C.muted; getBtn.TextSize = 12; getBtn.AutoButtonColor = false
+getBtn.TextXAlignment = Enum.TextXAlignment.Left
+
+local status = Instance.new("TextLabel", card)
+status.BackgroundTransparency = 1
+status.Position = UDim2.new(0, 0, 1, -32); status.Size = UDim2.new(1, 0, 0, 14)
+status.Font = Enum.Font.Gotham; status.Text = ""
+status.TextColor3 = C.muted; status.TextSize = 11
+status.TextXAlignment = Enum.TextXAlignment.Left
+
+local foot = Instance.new("TextLabel", card)
+foot.BackgroundTransparency = 1
+foot.Position = UDim2.new(0, 0, 1, -14); foot.Size = UDim2.new(1, 0, 0, 12)
+foot.Font = Enum.Font.Gotham; foot.Text = "Panda v3.external"
+foot.TextColor3 = Color3.fromRGB(80, 80, 80); foot.TextSize = 9
+foot.TextXAlignment = Enum.TextXAlignment.Left
+
+closeBtn.MouseButton1Click:Connect(function() gui:Destroy() end)
+getBtn.MouseButton1Click:Connect(function()
+    local link = Pelinda.GetKeyLink({ Service = PANDA_CONFIG.Service })
+    if link then safeCopy(link); status.Text = "Link copied."; status.TextColor3 = C.success end
+end)
+verifyBtn.MouseButton1Click:Connect(function()
+    local key = inputBox.Text:gsub("%s+", "")
+    if key == "" then status.Text = "Please enter your key."; status.TextColor3 = C.error_; return end
+    verifyBtn.Text = "Verifying…"
+    if validate(key) then
+        if PANDA_CONFIG.SaveKey then safeWrite(PANDA_CONFIG.SaveKeyPath, key) end
+        status.Text = "Verified."; status.TextColor3 = C.success
+        _wait(0.5); gui:Destroy()
+    else
+        verifyBtn.Text = "Continue"
+        status.Text = "Invalid key."; status.TextColor3 = C.error_
+        if PANDA_CONFIG.AutoKick then game.Players.LocalPlayer:Kick(PANDA_CONFIG.KickMessage) end
+    end
+end)
